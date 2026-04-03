@@ -145,5 +145,5 @@ CodeHab aligns perfectly with the **“AI Without the API: Deterministic Intelli
 
 **Project Name:** CodeHab  
 **Theme:** AI Without the API: Deterministic Intelligence  
-**Category:** Learning System 
-[**Website Demo on Loom**](https://www.loom.com/share/9f526d5d61834a77884f90e8f30a7b40)
+**Category:** Learning System  
+[**Website Demo on Loom**](https://www.loom.com/share/9f526d5d61834a77884f90e8f30a7b40)  
