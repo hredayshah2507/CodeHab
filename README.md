@@ -78,37 +78,6 @@ Many learners struggle with consistency when practicing coding problems. They of
 
 ---
 
-## File Structure
-
-CodeHab/
-├── backend/
-│ ├── main.py
-│ ├── api/
-│ │ └── recommend.py
-│ ├── engine/
-│ │ ├── constants.py
-│ │ ├── rules.py
-│ │ ├── scoring.py
-│ │ ├── selector.py
-│ │ └── explain.py
-│ ├── data/
-│ │ └── neetcode150.json
-│ └── init.py
-│
-├── frontend/
-│ ├── index.html
-│ ├── styles.css
-│ └── script.js
-|
-├── screenshots/
-│   ├── home.png
-│   ├── recommendation.png
-│   ├── recommendation2.png
-|
-└── README.md
-
----
-
 ## Screenshots
 
 ### Home Screen
@@ -176,4 +145,4 @@ CodeHab aligns perfectly with the **“AI Without the API: Deterministic Intelli
 
 **Project Name:** CodeHab  
 **Theme:** AI Without the API: Deterministic Intelligence  
-**Category:** Learning / Career System  
+**Category:** Learning System  
