@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CodeHab — Build the Habit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- ── Noise overlay ─────────────────────────────────────────────────── -->
+  <div class="noise"></div>
+
+  <!-- ── Header ────────────────────────────────────────────────────────── -->
+  <header class="site-header">
+    <div class="logo">
+      <span class="logo-bracket">{</span>
+      <span class="logo-text">CodeHab</span>
+      <span class="logo-bracket">}</span>
+    </div>
+    <div class="header-meta">
+      <span class="meta-pill" id="streak-display">🔥 0-day streak</span>
+      <span class="meta-pill" id="solved-display">✓ 0 solved</span>
+    </div>
+  </header>
+
+  <!-- ── Main layout ───────────────────────────────────────────────────── -->
+  <main class="layout">
+
+    <!-- LEFT PANEL: Input form -->
+    <aside class="panel panel--input">
+      <div class="panel-label">// your current state</div>
+
+      <!-- Energy -->
+      <div class="field-group">
+        <label class="field-label">Energy Level</label>
+        <div class="seg-control" id="energy-control">
+          <button class="seg-btn" data-value="low">Low</button>
+          <button class="seg-btn active" data-value="medium">Medium</button>
+          <button class="seg-btn" data-value="high">High</button>
+        </div>
+      </div>
+
+      <!-- Time -->
+      <div class="field-group">
+        <label class="field-label">Time Available</label>
+        <div class="time-slider-wrap">
+          <input type="range" id="time-slider" min="15" max="90" step="15" value="30" />
+          <div class="time-labels">
+            <span>15m</span><span>30m</span><span>45m</span><span>60m</span><span>75m</span><span>90m</span>
+          </div>
+          <div class="time-value" id="time-value">30 min</div>
+        </div>
+      </div>
+
+      <!-- Productivity -->
+      <div class="field-group">
+        <label class="field-label">Productivity Today</label>
+        <div class="seg-control" id="productivity-control">
+          <button class="seg-btn" data-value="low">Low</button>
+          <button class="seg-btn active" data-value="medium">Medium</button>
+          <button class="seg-btn" data-value="high">High</button>
+        </div>
+      </div>
+
+      <!-- Streak -->
+      <div class="field-group">
+        <label class="field-label">Current Streak (days)</label>
+        <div class="number-input-wrap">
+          <button class="num-btn" id="streak-minus">−</button>
+          <span class="num-display" id="streak-val">0</span>
+          <button class="num-btn" id="streak-plus">+</button>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <button class="cta-btn" id="recommend-btn">
+        <span class="cta-text">Get My Problem</span>
+        <span class="cta-arrow">→</span>
+      </button>
+
+      <!-- Progress toggle -->
+      <button class="link-btn" id="toggle-progress">
+        View / edit completed problems ↓
+      </button>
+    </aside>
+
+    <!-- RIGHT PANEL: Recommendation output -->
+    <section class="panel panel--output" id="output-panel">
+      <!-- Empty state -->
+      <div class="empty-state" id="empty-state">
+        <div class="empty-icon">◈</div>
+        <p class="empty-text">Set your state and hit<br/><strong>Get My Problem</strong></p>
+        <p class="empty-sub">CodeHab will pick the optimal problem using deterministic scoring — no AI, just logic.</p>
+      </div>
+
+      <!-- Loading state -->
+      <div class="loading-state hidden" id="loading-state">
+        <div class="loader-dots">
+          <span></span><span></span><span></span>
+        </div>
+        <p class="loading-text">Running the engine...</p>
+      </div>
+
+      <!-- Result card -->
+      <div class="result-card hidden" id="result-card">
+        <!-- Mode badge -->
+        <div class="mode-badge" id="mode-badge">FRESH</div>
+
+        <!-- Problem header -->
+        <div class="problem-header">
+          <div class="problem-title-row">
+            <h2 class="problem-title" id="problem-title">—</h2>
+            <span class="diff-badge" id="diff-badge">Easy</span>
+          </div>
+          <div class="problem-meta-row">
+            <span class="pmeta" id="topic-label">—</span>
+            <span class="pmeta-sep">·</span>
+            <span class="pmeta" id="time-label">— min</span>
+            <span class="pmeta-sep">·</span>
+            <span class="pmeta" id="score-label">Score: —</span>
+          </div>
+          <div class="tags-row" id="tags-row"></div>
+        </div>
+
+        <!-- Headline -->
+        <div class="result-section">
+          <div class="section-label">// why this problem</div>
+          <p class="headline-text" id="headline-text">—</p>
+          <p class="reason-text" id="reason-text">—</p>
+        </div>
+
+        <!-- Score breakdown -->
+        <div class="result-section">
+          <div class="section-label">// scoring breakdown</div>
+          <div class="score-bars" id="score-bars"></div>
+        </div>
+
+        <!-- Tip -->
+        <div class="result-section tip-section">
+          <div class="section-label">// session tip</div>
+          <p class="tip-text" id="tip-text">—</p>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="action-row">
+          <a class="action-btn action-btn--primary" id="solve-btn" href="#" target="_blank" rel="noopener">
+            Open on LeetCode ↗
+          </a>
+          <button class="action-btn action-btn--secondary" id="mark-done-btn">
+            Mark as Solved ✓
+          </button>
+          <button class="action-btn action-btn--ghost" id="skip-btn">
+            Skip →
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ── Progress modal (inline expandable) ──────────────────────────── -->
+  <section class="progress-section hidden" id="progress-section">
+    <div class="progress-header">
+      <h3>Completed Problems</h3>
+      <button class="close-btn" id="close-progress">✕</button>
+    </div>
+    <div class="progress-search">
+      <input type="text" id="search-problems" placeholder="Search problems…" />
+    </div>
+    <div class="problem-grid" id="problem-grid"></div>
+  </section>
+
+  <!-- ── Toast ─────────────────────────────────────────────────────────── -->
+  <div class="toast hidden" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
